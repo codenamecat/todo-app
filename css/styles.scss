@@ -2,7 +2,7 @@
 
 $lightcolors: (
     bright-blue: hsl(220, 98%, 61%),
-    check-background: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%),
+    check-background: linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%)), //huom background-image,ei -color
     very-light-gray: hsl(0, 0%, 98%),
     very-light-grayish-blue: hsl(236, 33%, 92%),
     light-grayish-blue: hsl(233, 11%, 84%),
