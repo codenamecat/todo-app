@@ -1,15 +1,26 @@
 // model
 
-let todos = [{
-    title: 'Todo 1',
-    id: 'id1'
-}, {
-    title: 'Todo 2',
-    id: 'id2'
-}, {
-    title: 'Todo 3',
-    id: 'id3'
-}];
+let todos;
+
+const savedTodos = JSON.parse(localStorage.getItem("todos"));
+
+if (Array.isArray(savedTodos)) {
+    todos = savedTodos;
+} else {
+    todos = [{
+        title: 'Todo 1',
+        id: 'id1',
+        isChecked: false
+    }, {
+        title: 'Todo 2',
+        id: 'id2',
+        isChecked: false
+    }, {
+        title: 'Todo 3',
+        id: 'id3',
+        isChecked: false
+    }];
+}
 
 const todoListElement = document.getElementById('todo-list-element');
 const todoTextbox = document.getElementById('todo-textbox');
@@ -23,35 +34,47 @@ const completedBtn = document.getElementById('completed-button');
 function createTodo(title) {
     const id = "" + new Date().getTime();
 
-        todos.push({
-            title: title,
-            id: id
-        });
+    todos.push({
+        title: title,
+        id: id,
+        isChecked: false
+    });
+    saveTodos();
 }
 
 function deleteTodoFromArray(idToDelete) {
-    todos = todos.filter(function(todo) {
+    todos = todos.filter(function (todo) {
         if (todo.id === idToDelete) {
             return false;
         } else {
             return true;
         }
     })
+    saveTodos();
+}
+
+function saveTodos() {
+    localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 // view
 
-function renderList() {
+function renderList(arr) {
 
     todoListElement.innerHTML = ''; // resetting the list
 
-    todos.forEach(function (todo) {
+    arr.forEach(function (todo) {
         const listItem = document.createElement('div');
         const todoCheckbox = document.createElement('input');
 
         todoCheckbox.setAttribute('type', 'checkbox');
         todoCheckbox.setAttribute('name', 'todo-item');
         todoCheckbox.id = todo.id;
+        todoCheckbox.onclick = toggleChecked;
+
+        if (todo.isChecked) {
+            todoCheckbox.setAttribute('checked', true);
+        }
 
         const checkboxLabel = document.createElement('label');
         checkboxLabel.setAttribute('for', todo.id);
@@ -67,11 +90,18 @@ function renderList() {
         listItem.appendChild(deleteButton);
         todoListElement.appendChild(listItem);
     })
-
 }
 
 function updateItemsLeft() {
-    itemsLeft.textContent = todos.length + ' item(s) left'; //has to be unchecked items left later on
+    // probably not the best way to rewrite same code again but oh well
+    const activeTodos = [];
+
+    todos.forEach(function(todo) {
+        if (todo.isChecked === false) {
+            activeTodos.push(todo);
+        }
+    })
+    itemsLeft.textContent = `${activeTodos.length} item(s) left`; 
 }
 
 // controller
@@ -83,7 +113,7 @@ todoTextbox.addEventListener('keyup', function (event) {
         createTodo(title);
 
         todoTextbox.value = '';
-        renderList();
+        renderList(todos);
         updateItemsLeft();
     }
 })
@@ -96,7 +126,7 @@ clearCompleted.addEventListener('click', function () {
             deleteTodoFromArray(todobox.id);
         }
     })
-    renderList();
+    renderList(todos);
     updateItemsLeft();
 })
 
@@ -106,11 +136,52 @@ function deleteTodo(event) {
 
     deleteTodoFromArray(idToDelete);
 
-    renderList();
+    renderList(todos);
     updateItemsLeft();
 }
 
-renderList();
+function toggleChecked(event) {
+    const checkbox = event.target;
+    checkbox.classList.toggle('checked');
+    const thisCheckbox = checkbox.id;
+
+    todos.forEach(function(todo) {
+        if (todo.id === thisCheckbox) {
+            todo.isChecked = !(todo.isChecked);
+        }
+    })
+
+    saveTodos();
+    updateItemsLeft();
+}
+
+allBtn.addEventListener('click', function() {
+    renderList(todos);
+})
+
+activeBtn.addEventListener('click', function() {
+    const activeTodos = [];
+
+    todos.forEach(function(todo) {
+        if (todo.isChecked === false) {
+            activeTodos.push(todo);
+        }
+    })
+    renderList(activeTodos);
+})
+
+completedBtn.addEventListener('click', function() {
+    const completedTodos = [];
+
+    todos.forEach(function(todo) {
+        if (todo.isChecked) {
+            completedTodos.push(todo);
+        }
+    })
+    renderList(completedTodos);
+})
+
+renderList(todos);
 updateItemsLeft();
 
 // graveyard of stuff that didn't work for their purpose but i might still need for something
@@ -144,3 +215,9 @@ updateItemsLeft();
     //     })
     //     renderList();
     // })
+
+    // steps in getting the checkbox boolean to work
+
+    // localStorage.getItem("todos");
+    // checkbox.isChecked = !(checkbox.isChecked);
+    // console.log(checkbox.id,checkbox.isChecked);
