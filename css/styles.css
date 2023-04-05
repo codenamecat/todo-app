@@ -1,1 +1,159 @@
-/*# sourceMappingURL=styles.css.map */
+html {
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+*:focus {
+  outline-color: #3a7bfd;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+  background-image: url("../images/bg-mobile-light.jpg");
+  background-repeat: no-repeat;
+  background-color: #fafafa;
+  background-size: contain;
+  width: 90%;
+}
+
+.heading-and-button {
+  display: flex;
+  justify-content: space-between;
+  margin: 28px 0;
+}
+
+h1 {
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  font-size: 28px;
+  margin: 0;
+}
+
+#mode-toggler {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+#sun-icon {
+  display: none;
+}
+
+#moon-icon {
+  display: inline-block;
+}
+
+#todo-textbox {
+  width: 100%;
+  line-height: 50px;
+  border: none;
+  border-radius: 4px;
+  font-family: "Josefin Sans", sans-serif;
+  padding-top: 4px;
+  padding-left: 46px;
+  font-size: 16px;
+}
+#todo-textbox::-moz-placeholder {
+  color: #9394a5;
+  font-size: 14px;
+}
+#todo-textbox::placeholder {
+  color: #9394a5;
+  font-size: 14px;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+}
+
+#visual-checkbox {
+  position: absolute;
+  align-self: center;
+}
+
+.list-container {
+  background-color: white;
+  margin: 18px 0;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px #e4e5f1;
+}
+
+.todo-element {
+  min-height: 50px;
+  font-size: 14px;
+  border-bottom: 1px solid #e4e5f1;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.todo-element img {
+  position: absolute;
+  right: 20px;
+  width: 14px;
+}
+.todo-element label {
+  color: #484b6a;
+  padding-top: 10px;
+  padding-bottom: 6px;
+  margin-left: 10px;
+  margin-right: 40px;
+}
+
+input[type=checkbox] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #e4e5f1;
+  margin: 0 0 0 16px;
+}
+input[type=checkbox]:checked {
+  background-image: url("../images/icon-check.svg"), linear-gradient(135deg, #57ddff, #c058f3);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+input[type=checkbox]:checked + label {
+  text-decoration: line-through;
+  color: #d2d3db;
+}
+
+#last-row {
+  display: flex;
+  justify-content: space-between;
+  color: #9394a5;
+  font-size: 14px;
+  height: 50px;
+}
+#last-row #items-left {
+  margin-left: 16px;
+  padding-top: 4px;
+}
+#last-row #clear-completed {
+  margin-right: 20px;
+  padding-top: 4px;
+}
+
+#filter-container {
+  background-color: white;
+  height: 40px;
+  border-radius: 4px;
+  box-shadow: 0 0px 20px #e4e5f1;
+  display: flex;
+  justify-content: center;
+}
+#filter-container button {
+  border: none;
+  background: none;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 700;
+  color: #9394a5;
+}
+#filter-container .active {
+  color: #3a7bfd;
+}/*# sourceMappingURL=styles.css.map */

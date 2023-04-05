@@ -1,29 +1,208 @@
-// font-family: 'Josefin Sans', sans-serif;
-
 $lightcolors: (
-    bright-blue: hsl(220, 98%, 61%),
-    check-background: linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%)), //huom background-image,ei -color
-    very-light-gray: hsl(0, 0%, 98%),
-    very-light-grayish-blue: hsl(236, 33%, 92%),
-    light-grayish-blue: hsl(233, 11%, 84%),
-    dark-grayish-blue: hsl(236, 9%, 61%),
-    very-dark-grayish-blue: hsl(235, 19%, 35%)
+    bright-blue: #3a7bfd,
+    check-background: linear-gradient(135deg, #57ddff, #c058f3),
+    //huom background-image,ei -color
+    very-light-gray: #fafafa,
+    very-light-grayish-blue: #e4e5f1,
+    light-grayish-blue: #d2d3db,
+    dark-grayish-blue: #9394a5,
+    very-dark-grayish-blue: #484b6a
 );
 
 $darkcolors: (
-    very-dark-blue: hsl(235, 21%, 11%),
-    very-dark-desaturated-blue: hsl(235, 24%, 19%),
-    light-grayish-blue: hsl(234, 39%, 85%),
-    light-grayish-blue-hover: hsl(236, 33%, 92%),
-    dark-grayish-blue: hsl(234, 11%, 52%),
-    darker-grayish-blue: hsl(233, 14%, 35%),
-    very-dark-grayish-blue: hsl(237, 14%, 26%)
+    very-dark-blue: #161722,
+    very-dark-desaturated-blue: #25273c,
+    light-grayish-blue: #cacde8,
+    light-grayish-blue-hover: #e4e5f1,
+    dark-grayish-blue: #777a92,
+    darker-grayish-blue: #4d5066,
+    very-dark-grayish-blue: #393a4c
 );
 
 @function lightcolor($color-name) {
     @return map-get($lightcolors, $color-name)
-};
+}
+
+;
 
 @function darkcolor($color-name) {
     @return map-get($darkcolors, $color-name)
-};
+}
+
+;
+
+$desktop: 1440px; //for now
+
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+        @content;
+    }
+}
+
+html {
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+*:focus {
+    outline-color: lightcolor(bright-blue);
+}
+
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    background-image: url("../images/bg-mobile-light.jpg");
+    background-repeat: no-repeat;
+    background-color: lightcolor(very-light-gray);
+    background-size: contain;
+    width: 90%;
+}
+
+.heading-and-button {
+    display: flex;
+    justify-content: space-between;
+    margin: 28px 0;
+}
+
+h1 {
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    font-size: 28px;
+    margin: 0;
+}
+
+#mode-toggler {
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+#sun-icon {
+    display: none; //for light mode
+}
+
+#moon-icon {
+    display: inline-block; //for light mode
+}
+
+#todo-textbox {
+    width: 100%;
+    line-height: 50px;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Josefin Sans', sans-serif;
+    padding-top: 4px;
+    padding-left: 46px;
+    font-size: 16px;
+
+    &::placeholder {
+        color: lightcolor(dark-grayish-blue);
+        font-size: 14px;
+    }
+
+    // original design would have me remove outline from the input, i disagree
+    // &:focus {
+    //     outline: none;
+    // }
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+}
+
+#visual-checkbox {
+    position: absolute;
+    align-self: center;
+}
+
+.list-container {
+    background-color: white;
+    margin: 18px 0;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px lightcolor(very-light-grayish-blue);
+}
+
+.todo-element {
+    min-height: 50px;
+    font-size: 14px;
+    border-bottom: 1px solid lightcolor(very-light-grayish-blue);
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    img {
+        position: absolute;
+        right: 20px;
+        width: 14px;
+    }
+
+    label {
+        color: lightcolor(very-dark-grayish-blue);
+        padding-top: 10px;
+        padding-bottom: 6px;
+        margin-left: 10px;
+        margin-right: 40px;
+    }
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid lightcolor(very-light-grayish-blue);
+    margin: 0 0 0 16px;
+
+    &:checked {
+        background-image: url("../images/icon-check.svg"), lightcolor(check-background);
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    &:checked+label {
+        text-decoration: line-through;
+        color: lightcolor(light-grayish-blue);
+    }
+}
+
+#last-row {
+    display: flex;
+    justify-content: space-between;
+    color: lightcolor(dark-grayish-blue);
+    font-size: 14px;
+    height: 50px;
+
+    #items-left {
+        margin-left: 16px;
+        padding-top: 4px;
+    }
+
+    #clear-completed {
+        margin-right: 20px;
+        padding-top: 4px;
+    }
+}
+
+#filter-container {
+    background-color: white;
+    height: 40px;
+    border-radius: 4px;
+    box-shadow: 0 0px 20px lightcolor(very-light-grayish-blue);
+    display: flex;
+    justify-content: center;
+
+    button {
+        border: none;
+        background: none;
+        font-family: 'Josefin Sans', sans-serif;
+        font-weight: 700;
+        color: lightcolor(dark-grayish-blue);
+    }
+
+    .active {
+        color: lightcolor(bright-blue);
+    }
+}

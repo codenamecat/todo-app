@@ -67,6 +67,8 @@ function renderList(arr) {
         const listItem = document.createElement('div');
         const todoCheckbox = document.createElement('input');
 
+        listItem.classList.add('todo-element');
+
         todoCheckbox.setAttribute('type', 'checkbox');
         todoCheckbox.setAttribute('name', 'todo-item');
         todoCheckbox.id = todo.id;
@@ -157,6 +159,9 @@ function toggleChecked(event) {
 
 allBtn.addEventListener('click', function() {
     renderList(todos);
+    allBtn.classList.add('active');
+    activeBtn.classList.remove('active');
+    completedBtn.classList.remove('active');
 })
 
 activeBtn.addEventListener('click', function() {
@@ -168,6 +173,9 @@ activeBtn.addEventListener('click', function() {
         }
     })
     renderList(activeTodos);
+    activeBtn.classList.add('active');
+    allBtn.classList.remove('active');
+    completedBtn.classList.remove('active');
 })
 
 completedBtn.addEventListener('click', function() {
@@ -179,6 +187,9 @@ completedBtn.addEventListener('click', function() {
         }
     })
     renderList(completedTodos);
+    completedBtn.classList.add('active');
+    allBtn.classList.remove('active');
+    activeBtn.classList.remove('active');
 })
 
 renderList(todos);

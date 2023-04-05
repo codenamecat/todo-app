@@ -14,25 +14,31 @@
 </head>
 
 <body>
-    <h1>Todo</h1>
-    <button id="mode-toggler">
-        <img id="moon-icon" src="images/icon-moon.svg" />
-        <img id="sun-icon" src="images/icon-sun.svg" />
-    </button>
-
-    <input type="checkbox" />
-    <input id="todo-textbox" type="text" placeholder="Create a new todo..." />
-    <div id="todo-list-element">
-        <!-- items go here -->
-
+    <div class="heading-and-button">
+        <h1>Todo</h1>
+        <button id="mode-toggler">
+            <img id="moon-icon" src="images/icon-moon.svg" />
+            <img id="sun-icon" src="images/icon-sun.svg" />
+        </button>
     </div>
-    <div id="last-row">
-        <p id="items-left"></p>
-        <p id="clear-completed">Clear Completed</p>
+
+    <div class="input-container">
+        <input id="visual-checkbox" type="checkbox" />
+        <input id="todo-textbox" type="text" placeholder="Create a new todo..." />
+    </div>
+    <div class="list-container">
+        <div id="todo-list-element">
+            <!-- items go here -->
+
+        </div>
+        <div id="last-row">
+            <p id="items-left"></p>
+            <p id="clear-completed">Clear Completed</p>
+        </div>
     </div>
 
     <div id="filter-container">
-        <button id="all-button">All</button>
+        <button class="active" id="all-button">All</button>
         <button id="active-button">Active</button>
         <button id="completed-button">Completed</button>
     </div>
