@@ -1,7 +1,6 @@
 $lightcolors: (
     bright-blue: #3a7bfd,
     check-background: linear-gradient(135deg, #57ddff, #c058f3),
-    //huom background-image,ei -color
     very-light-gray: #fafafa,
     very-light-grayish-blue: #e4e5f1,
     light-grayish-blue: #d2d3db,
@@ -21,17 +20,13 @@ $darkcolors: (
 
 @function lightcolor($color-name) {
     @return map-get($lightcolors, $color-name)
-}
-
-;
+};
 
 @function darkcolor($color-name) {
     @return map-get($darkcolors, $color-name)
-}
+};
 
-;
-
-$desktop: 1440px; //for now
+$desktop: 700px;
 
 @mixin desktop {
     @media (min-width: #{$desktop}) {
@@ -57,6 +52,20 @@ body {
     background-color: lightcolor(very-light-gray);
     background-size: contain;
     width: 90%;
+    max-width: 600px;
+
+    &.dark-mode {
+        background-color: darkcolor(very-dark-blue);
+        background-image: url("../images/bg-mobile-dark.jpg");
+    }
+
+    @include desktop {
+        background-image: url("../images/bg-desktop-light.jpg");
+
+        &.dark-mode {
+            background-image: url("../images/bg-desktop-dark.jpg");
+        }
+    }
 }
 
 .heading-and-button {
@@ -77,14 +86,23 @@ h1 {
     border: none;
     background: none;
     padding: 0;
+    cursor: pointer;
 }
 
 #sun-icon {
-    display: none; //for light mode
+    display: none;
+
+    &.dark-mode {
+        display: inline-block;
+    }
 }
 
 #moon-icon {
-    display: inline-block; //for light mode
+    display: inline-block;
+
+    &.dark-mode {
+        display: none;
+    }
 }
 
 #todo-textbox {
@@ -96,6 +114,11 @@ h1 {
     padding-top: 4px;
     padding-left: 46px;
     font-size: 16px;
+
+    &.dark-mode {
+        background-color: darkcolor(very-dark-desaturated-blue);
+        color: darkcolor(light-grayish-blue);
+    }
 
     &::placeholder {
         color: lightcolor(dark-grayish-blue);
@@ -123,24 +146,35 @@ h1 {
     margin: 18px 0;
     border-radius: 4px;
     box-shadow: 0 10px 30px lightcolor(very-light-grayish-blue);
+
+    &.dark-mode {
+        background-color: darkcolor(very-dark-desaturated-blue);
+        box-shadow: none;
+    }
 }
 
 .todo-element {
     min-height: 50px;
     font-size: 14px;
+    color: lightcolor(very-dark-grayish-blue);
     border-bottom: 1px solid lightcolor(very-light-grayish-blue);
     display: flex;
     align-items: center;
     position: relative;
 
+    &.dark-mode {
+        border-bottom: 1px solid darkcolor(darker-grayish-blue);
+        color: darkcolor(light-grayish-blue);
+    }
+
     img {
         position: absolute;
         right: 20px;
         width: 14px;
+        cursor: pointer;
     }
 
     label {
-        color: lightcolor(very-dark-grayish-blue);
         padding-top: 10px;
         padding-bottom: 6px;
         margin-left: 10px;
@@ -155,6 +189,11 @@ input[type="checkbox"] {
     border-radius: 50%;
     border: 1px solid lightcolor(very-light-grayish-blue);
     margin: 0 0 0 16px;
+    cursor: pointer;
+
+    &.dark-mode {
+        border: 1px solid darkcolor(darker-grayish-blue);
+    }
 
     &:checked {
         background-image: url("../images/icon-check.svg"), lightcolor(check-background);
@@ -183,6 +222,7 @@ input[type="checkbox"] {
     #clear-completed {
         margin-right: 20px;
         padding-top: 4px;
+        cursor: pointer;
     }
 }
 
@@ -194,12 +234,20 @@ input[type="checkbox"] {
     display: flex;
     justify-content: center;
 
+    &.dark-mode {
+        background-color: darkcolor(very-dark-desaturated-blue);
+        box-shadow: none;
+    }
+
     button {
         border: none;
         background: none;
+        padding: 0;
+        margin: 0 8px;
         font-family: 'Josefin Sans', sans-serif;
         font-weight: 700;
         color: lightcolor(dark-grayish-blue);
+        cursor: pointer;
     }
 
     .active {

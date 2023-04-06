@@ -31,6 +31,13 @@ const allBtn = document.getElementById('all-button');
 const activeBtn = document.getElementById('active-button');
 const completedBtn = document.getElementById('completed-button');
 
+const modeToggler = document.getElementById('mode-toggler');
+const documentBody = document.getElementById('document-body');
+const listContainer = document.getElementById('list-container');
+const filterContainer = document.getElementById('filter-container');
+const sunIcon = document.getElementById('sun-icon');
+const moonIcon = document.getElementById('moon-icon');
+
 function createTodo(title) {
     const id = "" + new Date().getTime();
 
@@ -69,6 +76,12 @@ function renderList(arr) {
 
         listItem.classList.add('todo-element');
 
+        if (documentBody.classList.contains('dark-mode')) {
+            listItem.classList.add('dark-mode');
+        } else {
+            listItem.classList.remove('dark-mode');
+        }
+
         todoCheckbox.setAttribute('type', 'checkbox');
         todoCheckbox.setAttribute('name', 'todo-item');
         todoCheckbox.id = todo.id;
@@ -76,6 +89,12 @@ function renderList(arr) {
 
         if (todo.isChecked) {
             todoCheckbox.setAttribute('checked', true);
+        }
+
+        if (documentBody.classList.contains('dark-mode')) {
+            todoCheckbox.classList.add('dark-mode');
+        } else {
+            todoCheckbox.classList.remove('dark-mode');
         }
 
         const checkboxLabel = document.createElement('label');
@@ -95,7 +114,7 @@ function renderList(arr) {
 }
 
 function updateItemsLeft() {
-    // probably not the best way to rewrite same code again but oh well
+    // probably not best policy to rewrite the same code but oh well
     const activeTodos = [];
 
     todos.forEach(function(todo) {
@@ -104,6 +123,18 @@ function updateItemsLeft() {
         }
     })
     itemsLeft.textContent = `${activeTodos.length} item(s) left`; 
+}
+
+function toggleStyling() {
+    const todoElements = Array.from(document.getElementsByClassName('todo-element'));
+    todoElements.forEach(function(todo) {
+        todo.classList.toggle('dark-mode');
+    })
+
+    const checkboxes = Array.from(document.querySelectorAll('input[type=checkbox]'));
+    checkboxes.forEach(function(checkbox) {
+        checkbox.classList.toggle('dark-mode');
+    })
 }
 
 // controller
@@ -190,6 +221,17 @@ completedBtn.addEventListener('click', function() {
     completedBtn.classList.add('active');
     allBtn.classList.remove('active');
     activeBtn.classList.remove('active');
+})
+
+modeToggler.addEventListener('click', function() {
+    documentBody.classList.toggle('dark-mode');
+    listContainer.classList.toggle('dark-mode');
+    todoTextbox.classList.toggle('dark-mode');
+    filterContainer.classList.toggle('dark-mode');
+    moonIcon.classList.toggle('dark-mode');
+    sunIcon.classList.toggle('dark-mode');
+    
+    toggleStyling();
 })
 
 renderList(todos);
