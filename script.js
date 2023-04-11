@@ -75,6 +75,9 @@ function renderList(arr) {
         const todoCheckbox = document.createElement('input');
 
         listItem.classList.add('todo-element');
+        // listItem.setAttribute('draggable', true);
+        // listItem.ondragstart=onDragStart;
+        // listItem.ondragover=allowDrop;
 
         if (documentBody.classList.contains('dark-mode')) {
             listItem.classList.add('dark-mode');
@@ -117,26 +120,65 @@ function updateItemsLeft() {
     // probably not best policy to rewrite the same code but oh well
     const activeTodos = [];
 
-    todos.forEach(function(todo) {
+    todos.forEach(function (todo) {
         if (todo.isChecked === false) {
             activeTodos.push(todo);
         }
     })
-    itemsLeft.textContent = `${activeTodos.length} item(s) left`; 
+    itemsLeft.textContent = `${activeTodos.length} item(s) left`;
 }
 
 function toggleStyling() {
     const todoElements = Array.from(document.getElementsByClassName('todo-element'));
-    todoElements.forEach(function(todo) {
+    todoElements.forEach(function (todo) {
         todo.classList.toggle('dark-mode');
     })
 
     const checkboxes = Array.from(document.querySelectorAll('input[type=checkbox]'));
-    checkboxes.forEach(function(checkbox) {
+    checkboxes.forEach(function (checkbox) {
         checkbox.classList.toggle('dark-mode');
     })
 }
 
+// function onDragStart(event) {
+//     event.dataTransfer.setData('text/plain', event.target.id);
+// }
+
+// function allowDrop(event) {
+//     event.preventDefault();
+// }
+
+// function drop(event) {
+//     event.preventDefault();
+//     const data = event.dataTransfer.getData('text/plain', event.target.id);
+//     event.target.appendChild(document.getElementById(data));
+// }
+
+todoListElement.addEventListener('mouseover', function reorderList() {
+    // (A) SET CSS + GET ALL LIST ITEMS
+    // target.classList.add("slist");
+//     let items = document.getElementsByClassName('todo-element'), dragged = null;
+
+//     // (B) MAKE ITEMS DRAGGABLE + SORTABLE
+//     for (let i of items) {
+//         // (B1) ATTACH DRAGGABLE
+//         i.draggable = true;
+
+//         // (B6) DRAG OVER - PREVENT THE DEFAULT "DROP", SO WE CAN DO OUR OWN
+//         i.addEventListener('dragover', function(event) {
+//             event.preventDefault();
+//         })
+
+//         // (B7) ON DROP - DO SOMETHING
+//         i.addEventListener('drop', function(event) {
+//             event.preventDefault();
+//             if (this !== dragged) {
+//                 this.parentNode.insertBefore(dragged, this);
+//             }
+//         })
+//     }
+}
+)
 // controller
 
 todoTextbox.addEventListener('keyup', function (event) {
@@ -178,7 +220,7 @@ function toggleChecked(event) {
     checkbox.classList.toggle('checked');
     const thisCheckbox = checkbox.id;
 
-    todos.forEach(function(todo) {
+    todos.forEach(function (todo) {
         if (todo.id === thisCheckbox) {
             todo.isChecked = !(todo.isChecked);
         }
@@ -188,17 +230,17 @@ function toggleChecked(event) {
     updateItemsLeft();
 }
 
-allBtn.addEventListener('click', function() {
+allBtn.addEventListener('click', function () {
     renderList(todos);
     allBtn.classList.add('active');
     activeBtn.classList.remove('active');
     completedBtn.classList.remove('active');
 })
 
-activeBtn.addEventListener('click', function() {
+activeBtn.addEventListener('click', function () {
     const activeTodos = [];
 
-    todos.forEach(function(todo) {
+    todos.forEach(function (todo) {
         if (todo.isChecked === false) {
             activeTodos.push(todo);
         }
@@ -209,10 +251,10 @@ activeBtn.addEventListener('click', function() {
     completedBtn.classList.remove('active');
 })
 
-completedBtn.addEventListener('click', function() {
+completedBtn.addEventListener('click', function () {
     const completedTodos = [];
 
-    todos.forEach(function(todo) {
+    todos.forEach(function (todo) {
         if (todo.isChecked) {
             completedTodos.push(todo);
         }
@@ -223,14 +265,14 @@ completedBtn.addEventListener('click', function() {
     activeBtn.classList.remove('active');
 })
 
-modeToggler.addEventListener('click', function() {
+modeToggler.addEventListener('click', function () {
     documentBody.classList.toggle('dark-mode');
     listContainer.classList.toggle('dark-mode');
     todoTextbox.classList.toggle('dark-mode');
     filterContainer.classList.toggle('dark-mode');
     moonIcon.classList.toggle('dark-mode');
     sunIcon.classList.toggle('dark-mode');
-    
+
     toggleStyling();
 })
 

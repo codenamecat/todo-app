@@ -163,7 +163,7 @@ h1 {
     position: relative;
 
     &.dark-mode {
-        border-bottom: 1px solid darkcolor(darker-grayish-blue);
+        border-bottom: 1px solid darkcolor(very-dark-grayish-blue);
         color: darkcolor(light-grayish-blue);
     }
 
@@ -179,6 +179,7 @@ h1 {
         padding-bottom: 6px;
         margin-left: 10px;
         margin-right: 40px;
+        cursor: pointer;
     }
 }
 
@@ -190,9 +191,14 @@ input[type="checkbox"] {
     border: 1px solid lightcolor(very-light-grayish-blue);
     margin: 0 0 0 16px;
     cursor: pointer;
+    position: relative;
 
     &.dark-mode {
         border: 1px solid darkcolor(darker-grayish-blue);
+
+        &:checked+label {
+            color: darkcolor(dark-grayish-blue);
+        }
     }
 
     &:checked {
@@ -204,6 +210,10 @@ input[type="checkbox"] {
     &:checked+label {
         text-decoration: line-through;
         color: lightcolor(light-grayish-blue);
+    }
+
+    &:hover {
+        border-color: lightcolor(bright-blue);
     }
 }
 
@@ -223,6 +233,10 @@ input[type="checkbox"] {
         margin-right: 20px;
         padding-top: 4px;
         cursor: pointer;
+
+        &:hover {
+            color: lightcolor(very-dark-grayish-blue);
+        }
     }
 }
 
@@ -248,6 +262,10 @@ input[type="checkbox"] {
         font-weight: 700;
         color: lightcolor(dark-grayish-blue);
         cursor: pointer;
+
+        &:hover {
+            color: lightcolor(very-dark-grayish-blue);
+        }
     }
 
     .active {
