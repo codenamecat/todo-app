@@ -38,6 +38,8 @@ const filterContainer = document.getElementById('filter-container');
 const sunIcon = document.getElementById('sun-icon');
 const moonIcon = document.getElementById('moon-icon');
 
+let tasksForDragging;
+
 function createTodo(title) {
     const id = "" + new Date().getTime();
 
@@ -75,9 +77,7 @@ function renderList(arr) {
         const todoCheckbox = document.createElement('input');
 
         listItem.classList.add('todo-element');
-        // listItem.setAttribute('draggable', true);
-        // listItem.ondragstart=onDragStart;
-        // listItem.ondragover=allowDrop;
+        listItem.setAttribute('draggable', true);
 
         if (documentBody.classList.contains('dark-mode')) {
             listItem.classList.add('dark-mode');
@@ -140,45 +140,6 @@ function toggleStyling() {
     })
 }
 
-// function onDragStart(event) {
-//     event.dataTransfer.setData('text/plain', event.target.id);
-// }
-
-// function allowDrop(event) {
-//     event.preventDefault();
-// }
-
-// function drop(event) {
-//     event.preventDefault();
-//     const data = event.dataTransfer.getData('text/plain', event.target.id);
-//     event.target.appendChild(document.getElementById(data));
-// }
-
-todoListElement.addEventListener('mouseover', function reorderList() {
-    // (A) SET CSS + GET ALL LIST ITEMS
-    // target.classList.add("slist");
-//     let items = document.getElementsByClassName('todo-element'), dragged = null;
-
-//     // (B) MAKE ITEMS DRAGGABLE + SORTABLE
-//     for (let i of items) {
-//         // (B1) ATTACH DRAGGABLE
-//         i.draggable = true;
-
-//         // (B6) DRAG OVER - PREVENT THE DEFAULT "DROP", SO WE CAN DO OUR OWN
-//         i.addEventListener('dragover', function(event) {
-//             event.preventDefault();
-//         })
-
-//         // (B7) ON DROP - DO SOMETHING
-//         i.addEventListener('drop', function(event) {
-//             event.preventDefault();
-//             if (this !== dragged) {
-//                 this.parentNode.insertBefore(dragged, this);
-//             }
-//         })
-//     }
-}
-)
 // controller
 
 todoTextbox.addEventListener('keyup', function (event) {
@@ -276,6 +237,36 @@ modeToggler.addEventListener('click', function () {
     toggleStyling();
 })
 
+todoListElement.addEventListener('mouseover', () => {
+    activateDragging();
+})
+
+function activateDragging() {
+    tasksForDragging = todoListElement.querySelectorAll('.todo-element');
+    tasksForDragging.forEach(task => {
+        task.addEventListener('dragstart', () => {
+            task.classList.add('dragging');
+        });
+        task.addEventListener('dragend', () => {
+            task.classList.remove('dragging');
+        })
+    });
+}
+
+const initSortableList = (event) => {
+    event.preventDefault();
+    const draggingItem = todoListElement.querySelector('.dragging');
+    const siblings = [...todoListElement.querySelectorAll('.todo-element:not(.dragging)')];
+
+    let nextSibling = siblings.find(sibling => {
+        return event.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
+    });
+
+    todoListElement.insertBefore(draggingItem, nextSibling);
+}
+
+todoListElement.addEventListener('dragover', initSortableList);
+
 renderList(todos);
 updateItemsLeft();
 
@@ -316,3 +307,50 @@ updateItemsLeft();
     // localStorage.getItem("todos");
     // checkbox.isChecked = !(checkbox.isChecked);
     // console.log(checkbox.id,checkbox.isChecked);
+
+
+// attempts with drag and drop that didn't work
+
+// listItem.ondragstart=onDragStart;
+// listItem.ondragover=allowDrop;
+
+    
+// function onDragStart(event) {
+//     event.dataTransfer.setData('text/plain', event.target.id);
+// }
+
+// function allowDrop(event) {
+//     event.preventDefault();
+// }
+
+// function drop(event) {
+//     event.preventDefault();
+//     const data = event.dataTransfer.getData('text/plain', event.target.id);
+//     event.target.appendChild(document.getElementById(data));
+// }
+
+// todoListElement.addEventListener('mouseover', function reorderList() {
+// (A) SET CSS + GET ALL LIST ITEMS
+// target.classList.add("slist");
+//     let items = document.getElementsByClassName('todo-element'), dragged = null;
+
+//     // (B) MAKE ITEMS DRAGGABLE + SORTABLE
+//     for (let i of items) {
+//         // (B1) ATTACH DRAGGABLE
+//         i.draggable = true;
+
+//         // (B6) DRAG OVER - PREVENT THE DEFAULT "DROP", SO WE CAN DO OUR OWN
+//         i.addEventListener('dragover', function(event) {
+//             event.preventDefault();
+//         })
+
+//         // (B7) ON DROP - DO SOMETHING
+//         i.addEventListener('drop', function(event) {
+//             event.preventDefault();
+//             if (this !== dragged) {
+//                 this.parentNode.insertBefore(dragged, this);
+//             }
+//         })
+//     }
+// }
+// )
