@@ -68,7 +68,7 @@ h1 {
 
 #todo-textbox {
   width: 100%;
-  line-height: 50px;
+  height: 50px;
   border: none;
   border-radius: 4px;
   font-family: "Josefin Sans", sans-serif;
@@ -123,11 +123,18 @@ h1 {
   border-bottom: 1px solid #393a4c;
   color: #cacde8;
 }
-.todo-element img {
+.todo-element button {
   position: absolute;
   right: 20px;
   width: 14px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
   cursor: pointer;
+}
+.todo-element button img {
+  width: 15px;
 }
 .todo-element label {
   padding-top: 10px;
@@ -147,7 +154,6 @@ input[type=checkbox] {
   border: 1px solid #e4e5f1;
   margin: 0 0 0 16px;
   cursor: pointer;
-  position: relative;
 }
 input[type=checkbox].dark-mode {
   border: 1px solid #4d5066;
@@ -215,4 +221,11 @@ input[type=checkbox]:hover {
 }
 #filter-container .active {
   color: #3a7bfd;
+}
+
+.drag-instruction {
+  text-align: center;
+  margin: 30px;
+  color: #9394a5;
+  font-size: 14px;
 }/*# sourceMappingURL=styles.css.map */

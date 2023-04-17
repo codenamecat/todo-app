@@ -107,7 +107,7 @@ h1 {
 
 #todo-textbox {
     width: 100%;
-    line-height: 50px;
+    height: 50px;
     border: none;
     border-radius: 4px;
     font-family: 'Josefin Sans', sans-serif;
@@ -125,7 +125,7 @@ h1 {
         font-size: 14px;
     }
 
-    // original design would have me remove outline from the input, i disagree
+    // original design would have me remove outline from the input, i disagree but this is how you'd do it
     // &:focus {
     //     outline: none;
     // }
@@ -167,11 +167,20 @@ h1 {
         color: darkcolor(light-grayish-blue);
     }
 
-    img {
+    button {
         position: absolute;
         right: 20px;
         width: 14px;
+        border: none;
+        display: flex;
+        justify-content: center;
+
+        background-color: transparent;
         cursor: pointer;
+
+        img {
+            width: 15px;
+        }
     }
 
     label {
@@ -191,7 +200,6 @@ input[type="checkbox"] {
     border: 1px solid lightcolor(very-light-grayish-blue);
     margin: 0 0 0 16px;
     cursor: pointer;
-    position: relative;
 
     &.dark-mode {
         border: 1px solid darkcolor(darker-grayish-blue);
@@ -271,4 +279,11 @@ input[type="checkbox"] {
     .active {
         color: lightcolor(bright-blue);
     }
+}
+
+.drag-instruction {
+    text-align: center;
+    margin: 30px;
+    color: lightcolor(dark-grayish-blue);
+    font-size: 14px;
 }

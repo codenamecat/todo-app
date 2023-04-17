@@ -27,6 +27,8 @@ const todoTextbox = document.getElementById('todo-textbox');
 const itemsLeft = document.getElementById('items-left');
 const clearCompleted = document.getElementById('clear-completed');
 
+let deleteButtons;
+
 const allBtn = document.getElementById('all-button');
 const activeBtn = document.getElementById('active-button');
 const completedBtn = document.getElementById('completed-button');
@@ -104,15 +106,17 @@ function renderList(arr) {
         checkboxLabel.setAttribute('for', todo.id);
         checkboxLabel.appendChild(document.createTextNode(todo.title));
 
-        const deleteButton = document.createElement('img');
-        deleteButton.setAttribute('src', 'images/icon-cross.svg');
-        deleteButton.id = todo.id;
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = `<img src='images/icon-cross.svg' alt='delete' class='delete-button' id=${todo.id} />`
         deleteButton.onclick = deleteTodo;
 
         listItem.appendChild(todoCheckbox);
         listItem.appendChild(checkboxLabel);
         listItem.appendChild(deleteButton);
         todoListElement.appendChild(listItem);
+
+        deleteButtons = document.querySelectorAll('.delete-button');
+        updateDeleteButtons();
     })
 }
 
@@ -138,6 +142,13 @@ function toggleStyling() {
     checkboxes.forEach(function (checkbox) {
         checkbox.classList.toggle('dark-mode');
     })
+
+    documentBody.classList.toggle('dark-mode');
+    listContainer.classList.toggle('dark-mode');
+    todoTextbox.classList.toggle('dark-mode');
+    filterContainer.classList.toggle('dark-mode');
+    moonIcon.classList.toggle('dark-mode');
+    sunIcon.classList.toggle('dark-mode');
 }
 
 // controller
@@ -153,6 +164,17 @@ todoTextbox.addEventListener('keyup', function (event) {
         updateItemsLeft();
     }
 })
+
+function updateDeleteButtons() {
+    deleteButtons.forEach(function(deleteButton) {
+        deleteButton.addEventListener('keydown', (event) => {
+            let key = event.key;
+            if (key === 'Space') {
+                console.log('deletebutton pushed')
+            }
+        })
+    })
+}
 
 clearCompleted.addEventListener('click', function () {
 
@@ -227,15 +249,10 @@ completedBtn.addEventListener('click', function () {
 })
 
 modeToggler.addEventListener('click', function () {
-    documentBody.classList.toggle('dark-mode');
-    listContainer.classList.toggle('dark-mode');
-    todoTextbox.classList.toggle('dark-mode');
-    filterContainer.classList.toggle('dark-mode');
-    moonIcon.classList.toggle('dark-mode');
-    sunIcon.classList.toggle('dark-mode');
-
     toggleStyling();
 })
+
+// vv drag and drop tasks, however the order does not get saved when you refresh vv
 
 todoListElement.addEventListener('mouseover', () => {
     activateDragging();
@@ -314,7 +331,6 @@ updateItemsLeft();
 // listItem.ondragstart=onDragStart;
 // listItem.ondragover=allowDrop;
 
-    
 // function onDragStart(event) {
 //     event.dataTransfer.setData('text/plain', event.target.id);
 // }

@@ -23,7 +23,7 @@
     </div>
 
     <div class="input-container">
-        <input id="visual-checkbox" type="checkbox" />
+        <input id="visual-checkbox" type="checkbox" tabindex="-1" />
         <input id="todo-textbox" type="text" placeholder="Create a new todo..." />
     </div>
     <div class="list-container" id="list-container">
@@ -33,7 +33,7 @@
         </div>
         <div id="last-row">
             <p id="items-left"></p>
-            <p id="clear-completed">Clear Completed</p>
+            <p id="clear-completed" tabindex="0">Clear Completed</p>
         </div>
     </div>
 
@@ -42,8 +42,9 @@
         <button id="active-button">Active</button>
         <button id="completed-button">Completed</button>
     </div>
-
-
+    <div class="drag-instruction">
+        Drag and drop to reorder list
+    </div>
 
     <script src="script.js"></script>
 </body>
