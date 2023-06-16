@@ -1,5 +1,3 @@
-// model
-
 let todos;
 
 const savedTodos = JSON.parse(localStorage.getItem("todos"));
@@ -68,8 +66,6 @@ function saveTodos() {
     localStorage.setItem("todos", JSON.stringify(todos));
 }
 
-// view
-
 function renderList(arr) {
 
     todoListElement.innerHTML = ''; // resetting the list
@@ -121,7 +117,6 @@ function renderList(arr) {
 }
 
 function updateItemsLeft() {
-    // probably not best policy to rewrite the same code but oh well
     const activeTodos = [];
 
     todos.forEach(function (todo) {
@@ -150,8 +145,6 @@ function toggleStyling() {
     moonIcon.classList.toggle('dark-mode');
     sunIcon.classList.toggle('dark-mode');
 }
-
-// controller
 
 todoTextbox.addEventListener('keyup', function (event) {
     let key = event.key;
@@ -252,7 +245,7 @@ modeToggler.addEventListener('click', function () {
     toggleStyling();
 })
 
-// vv drag and drop tasks, however the order does not get saved when you refresh vv
+// drag and drop to reorder tasks
 
 todoListElement.addEventListener('mouseover', () => {
     activateDragging();
@@ -286,87 +279,3 @@ todoListElement.addEventListener('dragover', initSortableList);
 
 renderList(todos);
 updateItemsLeft();
-
-// graveyard of stuff that didn't work for their purpose but i might still need for something
-
-// i can create the elements but they aren't connected with an id
-
-// todos.forEach(function (todo) {
-    //     const listItem = document.createElement('div');
-    //     listItem.textContent = todo;
-
-    //     const todoCheckbox = document.createElement('input');
-    //     todoCheckbox.setAttribute('type', 'checkbox');
-    //     listItem.prepend(todoCheckbox);
-
-    //     const deleteButton = document.createElement('img');
-    //     deleteButton.setAttribute('src', 'images/icon-cross.svg');
-    //     listItem.appendChild(deleteButton);
-
-    //     todoListElement.appendChild(listItem);
-    // });
-
-    // i can remove the elements but not delete them from the array i think
-
-    // clearCompleted.addEventListener('click', function() {
-    //     const todoboxes = document.getElementsByName('todo-item');
-    //     const labels = document.getElementsByTagName('label');
-    //     todoboxes.forEach(function(todobox) {
-    //         if (todobox.checked) {
-    //             todobox.parentNode.removeChild(todobox);
-    //         }
-    //     })
-    //     renderList();
-    // })
-
-    // steps in getting the checkbox boolean to work
-
-    // localStorage.getItem("todos");
-    // checkbox.isChecked = !(checkbox.isChecked);
-    // console.log(checkbox.id,checkbox.isChecked);
-
-
-// attempts with drag and drop that didn't work
-
-// listItem.ondragstart=onDragStart;
-// listItem.ondragover=allowDrop;
-
-// function onDragStart(event) {
-//     event.dataTransfer.setData('text/plain', event.target.id);
-// }
-
-// function allowDrop(event) {
-//     event.preventDefault();
-// }
-
-// function drop(event) {
-//     event.preventDefault();
-//     const data = event.dataTransfer.getData('text/plain', event.target.id);
-//     event.target.appendChild(document.getElementById(data));
-// }
-
-// todoListElement.addEventListener('mouseover', function reorderList() {
-// (A) SET CSS + GET ALL LIST ITEMS
-// target.classList.add("slist");
-//     let items = document.getElementsByClassName('todo-element'), dragged = null;
-
-//     // (B) MAKE ITEMS DRAGGABLE + SORTABLE
-//     for (let i of items) {
-//         // (B1) ATTACH DRAGGABLE
-//         i.draggable = true;
-
-//         // (B6) DRAG OVER - PREVENT THE DEFAULT "DROP", SO WE CAN DO OUR OWN
-//         i.addEventListener('dragover', function(event) {
-//             event.preventDefault();
-//         })
-
-//         // (B7) ON DROP - DO SOMETHING
-//         i.addEventListener('drop', function(event) {
-//             event.preventDefault();
-//             if (this !== dragged) {
-//                 this.parentNode.insertBefore(dragged, this);
-//             }
-//         })
-//     }
-// }
-// )
