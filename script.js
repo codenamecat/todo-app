@@ -52,7 +52,7 @@ function createTodo(title) {
 }
 
 function deleteTodoFromArray(idToDelete) {
-    todos = todos.filter(function (todo) {
+    todos = todos.filter(todo => {
         if (todo.id === idToDelete) {
             return false;
         } else {
@@ -70,7 +70,7 @@ function renderList(arr) {
 
     todoListElement.innerHTML = ''; // resetting the list
 
-    arr.forEach(function (todo) {
+    arr.forEach(todo => {
         const listItem = document.createElement('div');
         const todoCheckbox = document.createElement('input');
 
@@ -110,16 +110,13 @@ function renderList(arr) {
         listItem.appendChild(checkboxLabel);
         listItem.appendChild(deleteButton);
         todoListElement.appendChild(listItem);
-
-        deleteButtons = document.querySelectorAll('.delete-button');
-        updateDeleteButtons();
     })
 }
 
 function updateItemsLeft() {
     const activeTodos = [];
 
-    todos.forEach(function (todo) {
+    todos.forEach(todo => {
         if (todo.isChecked === false) {
             activeTodos.push(todo);
         }
@@ -129,12 +126,12 @@ function updateItemsLeft() {
 
 function toggleStyling() {
     const todoElements = Array.from(document.getElementsByClassName('todo-element'));
-    todoElements.forEach(function (todo) {
+    todoElements.forEach(todo => {
         todo.classList.toggle('dark-mode');
     })
 
     const checkboxes = Array.from(document.querySelectorAll('input[type=checkbox]'));
-    checkboxes.forEach(function (checkbox) {
+    checkboxes.forEach(checkbox => {
         checkbox.classList.toggle('dark-mode');
     })
 
@@ -146,7 +143,7 @@ function toggleStyling() {
     sunIcon.classList.toggle('dark-mode');
 }
 
-todoTextbox.addEventListener('keyup', function (event) {
+todoTextbox.addEventListener('keyup', event => {
     let key = event.key;
     if (key === 'Enter' && todoTextbox.value !== '') {
         const title = todoTextbox.value;
@@ -157,17 +154,6 @@ todoTextbox.addEventListener('keyup', function (event) {
         updateItemsLeft();
     }
 })
-
-function updateDeleteButtons() {
-    deleteButtons.forEach(function(deleteButton) {
-        deleteButton.addEventListener('keydown', (event) => {
-            let key = event.key;
-            if (key === 'Space') {
-                console.log('deletebutton pushed')
-            }
-        })
-    })
-}
 
 clearCompleted.addEventListener('click', function () {
 
@@ -196,7 +182,7 @@ function toggleChecked(event) {
     checkbox.classList.toggle('checked');
     const thisCheckbox = checkbox.id;
 
-    todos.forEach(function (todo) {
+    todos.forEach(todo => {
         if (todo.id === thisCheckbox) {
             todo.isChecked = !(todo.isChecked);
         }
@@ -206,17 +192,17 @@ function toggleChecked(event) {
     updateItemsLeft();
 }
 
-allBtn.addEventListener('click', function () {
+allBtn.addEventListener('click', () => {
     renderList(todos);
     allBtn.classList.add('active');
     activeBtn.classList.remove('active');
     completedBtn.classList.remove('active');
 })
 
-activeBtn.addEventListener('click', function () {
+activeBtn.addEventListener('click', () => {
     const activeTodos = [];
 
-    todos.forEach(function (todo) {
+    todos.forEach(todo => {
         if (todo.isChecked === false) {
             activeTodos.push(todo);
         }
@@ -227,10 +213,10 @@ activeBtn.addEventListener('click', function () {
     completedBtn.classList.remove('active');
 })
 
-completedBtn.addEventListener('click', function () {
+completedBtn.addEventListener('click', () => {
     const completedTodos = [];
 
-    todos.forEach(function (todo) {
+    todos.forEach(todo => {
         if (todo.isChecked) {
             completedTodos.push(todo);
         }
@@ -241,7 +227,7 @@ completedBtn.addEventListener('click', function () {
     activeBtn.classList.remove('active');
 })
 
-modeToggler.addEventListener('click', function () {
+modeToggler.addEventListener('click', () => {
     toggleStyling();
 })
 
